@@ -185,7 +185,7 @@ module RBS
           args = node.children[1]&.children || []
 
           case node.children[0]
-          when :include
+          when :include, :prepend
             args.each do |arg|
               if (name = const_to_name(arg))
                 decls << AST::Members::Include.new(
