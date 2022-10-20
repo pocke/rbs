@@ -1,7 +1,7 @@
 module RBS
   module Collection
     module Sources
-      def self.from_config_entry: (source_entry) -> _Source
+      def self.from_config_entry: (source_entry, base_dir: Pathname) -> _Source
 
       interface _Source
         def has?: (Config::gem_entry) -> boolish

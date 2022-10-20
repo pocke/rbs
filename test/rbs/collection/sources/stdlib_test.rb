@@ -28,6 +28,6 @@ class RBS::Collection::Sources::StdlibTest < Test::Unit::TestCase
   def source
     RBS::Collection::Sources.from_config_entry({
       'type' => 'stdlib',
-    })
+    }, base_dir: Pathname.pwd)
   end
 end

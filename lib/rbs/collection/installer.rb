@@ -26,7 +26,7 @@ module RBS
         unless key
           raise "Cannot find source of '#{config_entry['name']}' gem"
         end
-        @source_for[key] ||= Sources.from_config_entry(key)
+        @source_for[key] ||= Sources.from_config_entry(key, base_dir: @lockfile.base_dir)
       end
     end
   end

@@ -1060,6 +1060,10 @@ EOB
               revision: main
               repo_dir: gems
 
+            # You can specify a local directory asa source also.
+            # - type: local
+            #   path: path/to/your/local/repository
+
           # A directory to install the downloaded RBSs
           path: .gem_rbs_collection
 

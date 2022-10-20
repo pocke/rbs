@@ -91,7 +91,7 @@ module RBS
           locked or raise
 
           upsert_gem specified, locked
-          source = Sources.from_config_entry(locked['source'] || raise)
+          source = Sources.from_config_entry(locked['source'] || raise, base_dir: config.base_dir)
           source.dependencies_of(locked)&.each do |dep|
             @gem_queue.push({ name: dep['name'], version: nil} )
           end

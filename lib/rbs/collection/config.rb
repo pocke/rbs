@@ -63,10 +63,24 @@ module RBS
         @config_path.dirname.join @data['path']
       end
 
+      def repo_paths
+        local_source_paths = _ = sources.map do |s|
+          case s
+          when Sources::Local
+            s.path
+          end
+        end.compact
+        [repo_path, *local_source_paths]
+      end
+
+      def base_dir
+        @config_path.dirname
+      end
+
       def sources
         @sources ||= (
           @data['sources']
-            .map { |c| Sources.from_config_entry(c) }
+            .map { |c| Sources.from_config_entry(c, base_dir: base_dir) }
             .push(Sources::Stdlib.instance)
             .push(Sources::Rubygems.instance)
         )
@@ -100,6 +114,8 @@ module RBS
             meta_path = repo_path.join(gem['name'], gem['version'], Sources::Git::METADATA_FILENAME)
             raise CollectionNotAvailable unless meta_path.exist?
             raise CollectionNotAvailable unless gem == YAML.load(meta_path.read)
+          when 'local'
+            # TODO: implement the check
           end
         end
       end
