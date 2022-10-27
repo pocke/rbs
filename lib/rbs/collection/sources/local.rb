@@ -2,6 +2,8 @@ module RBS
   module Collection
     module Sources
       class Local
+        include Base
+
         attr_reader :path
 
         def initialize(path:, base_dir:)

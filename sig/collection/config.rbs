@@ -73,6 +73,10 @@ module RBS
 
       def repo_path: () -> Pathname
 
+      def repo_paths: () -> Array[Pathname]
+
+      def base_dir: () -> Pathname
+
       def sources: () -> Array[Sources::_Source]
 
       def dump_to: (Pathname) -> void
