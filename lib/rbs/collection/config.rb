@@ -109,13 +109,15 @@ module RBS
         raise CollectionNotAvailable unless repo_path.exist?
 
         gems.each do |gem|
-          case gem['source']['type']
+          source = gem['source']
+          case source['type']
           when 'git'
             meta_path = repo_path.join(gem['name'], gem['version'], Sources::Git::METADATA_FILENAME)
             raise CollectionNotAvailable unless meta_path.exist?
             raise CollectionNotAvailable unless gem == YAML.load(meta_path.read)
           when 'local'
-            # TODO: implement the check
+            local_path = base_dir.join(source['path'], gem['name'], gem['version'])
+            raise CollectionNotAvailable unless local_path.exist?
           end
         end
       end
