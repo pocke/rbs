@@ -11,6 +11,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def ==(other)
         other.is_a?(Annotation) && other.string == string
       end

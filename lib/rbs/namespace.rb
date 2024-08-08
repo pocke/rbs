@@ -9,6 +9,8 @@ module RBS
       @absolute = absolute ? true : false
     end
 
+    unkeywords
+
     def self.empty
       @empty ||= new(path: [], absolute: false)
     end

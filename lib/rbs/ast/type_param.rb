@@ -13,6 +13,8 @@ module RBS
         @unchecked = false
       end
 
+      unkeywords
+
       def unchecked!(value = true)
         @unchecked = value ? true : false
         self

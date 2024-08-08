@@ -46,6 +46,8 @@ module RBS
           @location = location
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(self.class)
         end
@@ -139,6 +141,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def ==(other)
         other.is_a?(Variable) && other.name == name
       end
@@ -205,6 +209,8 @@ module RBS
         @name = name
         @location = location
       end
+
+      unkeywords
 
       def ==(other)
         other.is_a?(ClassSingleton) && other.name == name
@@ -318,6 +324,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def to_json(state = _ = nil)
         { class: :interface, name: name, args: args, location: location }.to_json(state)
       end
@@ -359,6 +367,8 @@ module RBS
         @args = args
         @location = location
       end
+
+      unkeywords
 
       def to_json(state = _ = nil)
         { class: :class_instance, name: name, args: args, location: location }.to_json(state)
@@ -402,6 +412,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def to_json(state = _ = nil)
         { class: :alias, name: name, args: args, location: location }.to_json(state)
       end
@@ -439,6 +451,8 @@ module RBS
         @types = types
         @location = location
       end
+
+      unkeywords
 
       def ==(other)
         other.is_a?(Tuple) && other.types == types
@@ -632,6 +646,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def ==(other)
         other.is_a?(Optional) && other.type == type
       end
@@ -716,6 +732,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def ==(other)
         other.is_a?(Union) && other.types == types
       end
@@ -796,6 +814,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def ==(other)
         other.is_a?(Intersection) && other.types == types
       end
@@ -874,10 +894,12 @@ module RBS
         attr_reader :name
         attr_reader :location
 
-        def initialize(type:, name:, location: nil)
+        def initialize(_type = RBS::Unkeywords::DEFAULT, _name = RBS::Unkeywords::DEFAULT, _location = nil , type: RBS::Unkeywords::DEFAULT, name: RBS::Unkeywords::DEFAULT, location: nil)
+          type = _type unless _type == RBS::Unkeywords::DEFAULT
+          name = _name unless _name == RBS::Unkeywords::DEFAULT
           @type = type
           @name = name
-          @location = location
+          @location = location || _location
         end
 
         def ==(other)
@@ -934,6 +956,8 @@ module RBS
         @optional_keywords = optional_keywords
         @rest_keywords = rest_keywords
       end
+
+      unkeywords
 
       def ==(other)
         other.is_a?(Function) &&
@@ -1209,6 +1233,8 @@ module RBS
         @return_type = return_type
       end
 
+      unkeywords
+
       def free_variables(acc = Set.new)
         return_type.free_variables(acc)
       end
@@ -1296,10 +1322,12 @@ module RBS
       attr_reader :required
       attr_reader :self_type
 
-      def initialize(type:, required:, self_type: nil)
+      def initialize(_type = RBS::Unkeywords::DEFAULT, _required = RBS::Unkeywords::DEFAULT, _self_type = nil, type: RBS::Unkeywords::DEFAULT, required: RBS::Unkeywords::DEFAULT, self_type: nil)
+        type = _type if _type != RBS::Unkeywords::DEFAULT
+        required = _required if _required != RBS::Unkeywords::DEFAULT
         @type = type
         @required = required ? true : false
-        @self_type = self_type
+        @self_type = _self_type || self_type
       end
 
       def ==(other)
@@ -1352,11 +1380,14 @@ module RBS
       attr_reader :self_type
       attr_reader :location
 
-      def initialize(location:, type:, block:, self_type: nil)
+      def initialize(_type = RBS::Unkeywords::DEFAULT, _block = RBS::Unkeywords::DEFAULT, _location = RBS::Unkeywords::DEFAULT, _self_type = nil, location: RBS::Unkeywords::DEFAULT, type: RBS::Unkeywords::DEFAULT, block: RBS::Unkeywords::DEFAULT, self_type: nil)
+        type = _type if _type != RBS::Unkeywords::DEFAULT
+        block = _block if _block != RBS::Unkeywords::DEFAULT
+        location = _location if _location != RBS::Unkeywords::DEFAULT
         @type = type
         @block = block
         @location = location
-        @self_type = self_type
+        @self_type = self_type || _self_type
       end
 
       def ==(other)
@@ -1474,6 +1505,8 @@ module RBS
         @literal = literal
         @location = location
       end
+
+      unkeywords
 
       def ==(other)
         other.is_a?(Literal) && other.literal == literal

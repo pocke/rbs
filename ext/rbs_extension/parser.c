@@ -350,15 +350,15 @@ static void parse_keyword(parserstate *state, VALUE *keywords, VALUE memo) {
 
   key = parse_keyword_key(state);
 
-  if (!NIL_P(rb_hash_aref(memo, key))) {
-    raise_syntax_error(
-      state,
-      state->current_token,
-      "duplicated keyword argument"
-    );
-  } else {
-    rb_hash_aset(memo, key, Qtrue);
-  }
+  // if (!NIL_P(rb_hash_aref(memo, key))) {
+  //   raise_syntax_error(
+  //     state,
+  //     state->current_token,
+  //     "duplicated keyword argument"
+  //   );
+  // } else {
+  //   rb_hash_aset(memo, key, Qtrue);
+  // }
 
   parser_advance_assert(state, pCOLON);
   param = parse_function_param(state);
@@ -430,7 +430,7 @@ static void parse_params(parserstate *state, method_params *params) {
     return;
   }
 
-  VALUE memo = rb_hash_new();
+  // VALUE memo = rb_hash_new();
 
   while (true) {
     VALUE param;
@@ -471,7 +471,7 @@ PARSE_OPTIONAL_PARAMS:
         parser_advance(state);
 
         if (is_keyword(state)) {
-          parse_keyword(state, &params->optional_keywords, memo);
+          parse_keyword(state, &params->optional_keywords, Qnil);
           parser_advance_if(state, pCOMMA);
           goto PARSE_KEYWORDS;
         }
@@ -538,7 +538,7 @@ PARSE_KEYWORDS:
     case pQUESTION:
       parser_advance(state);
       if (is_keyword(state)) {
-        parse_keyword(state, &params->optional_keywords, memo);
+        parse_keyword(state, &params->optional_keywords, Qnil);
       } else {
         raise_syntax_error(
           state,
@@ -561,7 +561,7 @@ PARSE_KEYWORDS:
     case tBANGIDENT:
     KEYWORD_CASES
       if (is_keyword(state)) {
-        parse_keyword(state, &params->required_keywords, memo);
+        parse_keyword(state, &params->required_keywords, Qnil);
       } else {
         raise_syntax_error(
           state,
@@ -616,8 +616,8 @@ static void initialize_method_params(method_params *params){
   params->optional_positionals = EMPTY_ARRAY;
   params->rest_positionals = Qnil;
   params->trailing_positionals = EMPTY_ARRAY;
-  params->required_keywords = EMPTY_HASH;
-  params->optional_keywords = EMPTY_HASH;
+  params->required_keywords = rb_hash_new();
+  params->optional_keywords = rb_hash_new();
   params->rest_keywords = Qnil;
 }
 

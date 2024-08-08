@@ -15,6 +15,8 @@ module RBS
             @new_name = new_name
             @location = location
           end
+
+          unkeywords
         end
 
         class WildcardClause
@@ -24,6 +26,8 @@ module RBS
             @location = location
             @namespace = namespace
           end
+
+          unkeywords
         end
 
         attr_reader :clauses, :location
@@ -32,6 +36,8 @@ module RBS
           @clauses = clauses
           @location = location
         end
+
+        unkeywords
       end
 
     end

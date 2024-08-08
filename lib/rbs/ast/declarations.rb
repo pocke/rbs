@@ -64,6 +64,8 @@ module RBS
             @location = location
           end
 
+          unkeywords
+
           def ==(other)
             other.is_a?(Super) && other.name == name && other.args == args
           end
@@ -104,6 +106,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(Class) &&
             other.name == name &&
@@ -143,6 +147,8 @@ module RBS
             @args = args
             @location = location
           end
+
+          unkeywords
 
           def ==(other)
             other.is_a?(Self) && other.name == name && other.args == args
@@ -192,6 +198,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(Module) &&
             other.name == name &&
@@ -239,6 +247,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(Interface) &&
             other.name == name &&
@@ -282,6 +292,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(TypeAlias) &&
             other.name == name &&
@@ -321,6 +333,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(Constant) &&
             other.name == name &&
@@ -357,6 +371,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(Global) &&
             other.name == name &&
@@ -389,6 +405,8 @@ module RBS
           @location = location
           @comment = comment
         end
+
+        unkeywords
 
         def ==(other)
           other.is_a?(self.class) &&

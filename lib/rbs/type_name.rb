@@ -22,6 +22,8 @@ module RBS
               end
     end
 
+    unkeywords
+
     def ==(other)
       other.is_a?(self.class) && other.namespace == namespace && other.name == name
     end

@@ -10,6 +10,40 @@ require "ripper"
 require "logger"
 require "tsort"
 
+module RBS
+  module Unkeywords
+    DEFAULT = Object.new
+
+    def unkeywords
+      mth = instance_method(:initialize)
+      ps = mth.parameters
+      # It expects the default value of optional keyword is `nil`
+      raise unless ps.all? { |p| p[0] == :keyreq || p[0] == :key }
+
+      prepend(Module.new do
+        eval <<~RUBY
+          def initialize(#{ps.map { |p| "_#{p[1]} = DEFAULT" }.join(", ")}, #{ps.map { |p| "#{p[1]}: DEFAULT" }.join(", ")})
+            #{ps.map do |p|
+              if p[0] == :keyreq
+                <<~RUBY
+                  #{p[1]} = _#{p[1]} if DEFAULT == #{p[1]}
+                  raise ArgumentError, \"#{p[1]} is required\" if DEFAULT == #{p[1]}
+                RUBY
+              else
+                <<~RUBY
+                #{p[1]} = _#{p[1]} if nil == #{p[1]}
+                RUBY
+              end
+            end.join("\n")}
+            super(#{ps.map { |p| "#{p[1]}: #{p[1]}" }.join(", ") })
+          end
+        RUBY
+      end)
+    end
+  end
+  Module.include(Unkeywords)
+end
+
 require "rbs/errors"
 require "rbs/buffer"
 require "rbs/namespace"

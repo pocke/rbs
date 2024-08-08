@@ -11,6 +11,8 @@ module RBS
         @location = location
       end
 
+      unkeywords
+
       def ==(other)
         other.is_a?(Comment) && other.string == string
       end

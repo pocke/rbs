@@ -15,6 +15,8 @@ module RBS
             @annotations = annotations
           end
 
+          unkeywords
+
           def ==(other)
             other.is_a?(Overload) && other.method_type == method_type && other.annotations == annotations
           end
@@ -60,6 +62,8 @@ module RBS
           @overloading = overloading
           @visibility = visibility
         end
+
+        unkeywords
 
         def ==(other)
           other.is_a?(MethodDefinition) &&
@@ -129,6 +133,8 @@ module RBS
           @comment = comment
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(self.class) && other.name == name && other.type == type
         end
@@ -196,6 +202,8 @@ module RBS
           @location = location
           @comment = comment
         end
+
+        unkeywords
 
         def ==(other)
           other.is_a?(self.class) && other.name == name && other.args == args
@@ -275,6 +283,8 @@ module RBS
           @kind = kind
           @visibility = visibility
         end
+
+        unkeywords
 
         def ==(other)
           other.is_a?(self.class) &&
@@ -367,6 +377,8 @@ module RBS
           @location = location
         end
 
+        unkeywords
+
         def ==(other)
           other.is_a?(self.class)
         end
@@ -410,6 +422,8 @@ module RBS
           @location = location
           @comment = comment
         end
+
+        unkeywords
 
         def ==(other)
           other.is_a?(self.class) &&

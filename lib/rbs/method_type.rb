@@ -14,6 +14,8 @@ module RBS
       @location = location
     end
 
+    unkeywords
+
     def ==(other)
       other.is_a?(MethodType) &&
         other.type_params == type_params &&
